@@ -6,13 +6,18 @@
   "scripts": {
     "start": "server.js",
     "dev": "nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write \"**/*.{js,json,md}\""
   },
   "author": "developer faizan",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
+    "express-async-handler": "^1.2.0",
     "nodemon": "^3.1.9"
+  },
+  "devDependencies": {
+    "prettier": "^3.5.3"
   }
 }
