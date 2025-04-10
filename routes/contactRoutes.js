@@ -1,4 +1,6 @@
 const express = require('express');
+const validateToken = require('../middlewares/validateTokenHandler.jsx');
+
 const {
   GetContact,
   GetContactById,
@@ -9,6 +11,7 @@ const {
 
 const router = express.Router();
 
+router.use(validateToken);
 router.route('/').get(GetContact).post(createContact);
 
 router

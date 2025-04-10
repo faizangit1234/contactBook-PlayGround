@@ -44,7 +44,14 @@ const errorHandler = (err, req, res, next) => {
       });
       break;
     default:
-      res.json({ message: 'everything good , ok' });
+      if (!res.headersSent) {
+        res.status(statusCode).json({
+          title: 'Error',
+          message: err.message,
+          stackTrace: err.stack,
+        });
+      }
+      break;
   }
 };
 
