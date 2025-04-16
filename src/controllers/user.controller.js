@@ -1,5 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const User = require('../models/user.model.js');
+const Company = require('../models/company.model.js');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -131,6 +132,23 @@ const deleteAllUsers = asyncHandler(async (req, res) => {
   res.send('success');
 });
 
+const getCompanyUsers= asyncHandler(async(req,res)=>{
+  const companyId = req.params.id;
+  if (!companyId) {
+    throw new Error('id is must');
+  }
+  const company = await Company.findById(companyId);
+  if (!company) {
+    throw new Error('Company not found');
+  }
+  const companyUsers= await User.find({company:companyId})
+  if(!companyUsers){
+    res.status(404)
+    throw new Error("no such company found")
+  }
+  res.send(companyUsers)
+})
+
 module.exports = {
   getAllUsers,
   getUser,
@@ -139,4 +157,5 @@ module.exports = {
   updateUser,
   deleteUser,
   deleteAllUsers,
+  getCompanyUsers
 };

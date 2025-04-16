@@ -8,6 +8,7 @@ const {
   updateUser,
   deleteUser,
   deleteAllUsers,
+  getCompanyUsers
 } = require('../controllers/user.controller.js');
 const validateToken = require('../middlewares/validateTokenHandler.js');
 
@@ -59,5 +60,7 @@ router.route('/login').post(login);
 router.get('/:id', validateToken, getUser);
 router.delete('/delete', validateToken, deleteAllUsers);
 router.route('/:id').put(updateUser).delete(deleteUser);
+router.get('/companyUsers/:id', getCompanyUsers);
+
 
 module.exports = router;
