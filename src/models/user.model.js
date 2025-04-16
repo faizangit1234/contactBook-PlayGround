@@ -25,6 +25,13 @@ const userSchema = mongoose.Schema(
       type:mongoose.Schema.Types.ObjectId,
       ref: "Department",
       required: true
+    },
+    role:{
+      type:String,
+      required: true,
+      enum: ["employee", "manager", "admin", "superAdmin"],
+      default: "employee",
+      trim: true
     }
   },
   { timestamps: true },
