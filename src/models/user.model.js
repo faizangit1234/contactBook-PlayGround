@@ -20,6 +20,11 @@ const userSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Company",
       required: true,
+    },
+    department:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref: "Department",
+      required: true
     }
   },
   { timestamps: true },
