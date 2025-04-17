@@ -16,23 +16,23 @@ const userSchema = mongoose.Schema(
       type: String,
       required: [true, 'password is required'],
     },
-    company:{
+    company: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Company",
+      ref: 'Company',
       required: true,
     },
-    department:{
-      type:mongoose.Schema.Types.ObjectId,
-      ref: "Department",
-      required: true
-    },
-    role:{
-      type:String,
+    department: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Department',
       required: true,
-      enum: ["employee", "manager", "admin", "superAdmin"],
-      default: "employee",
-      trim: true
-    }
+    },
+    role: {
+      type: String,
+      required: true,
+      enum: ['employee', 'manager', 'admin', 'superAdmin'],
+      default: 'employee',
+      trim: true,
+    },
   },
   { timestamps: true },
 );

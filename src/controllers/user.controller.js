@@ -16,7 +16,7 @@ const getAllUsers = asyncHandler(async (req, res) => {
 //@route /api/v1/users/
 //@public
 const register = asyncHandler(async (req, res) => {
-  const { name, email, password ,company, department, role} = req.body;
+  const { name, email, password, company, department, role } = req.body;
   if (!name || !email || !password || !company) {
     res.status(400);
     throw new Error('all fields are necessary');
@@ -27,12 +27,12 @@ const register = asyncHandler(async (req, res) => {
   }
   const hashedPass = await bcrypt.hash(password, 10);
   console.log(hashedPass);
-  const user = await User.create({ name, email, password: hashedPass , company,department, role});
+  const user = await User.create({ name, email, password: hashedPass, company, department, role });
   if (!user) {
     res.status(400);
     throw new Error('invalid fields');
   }
-  
+
   res.send({
     message: 'user created successfully',
     user: {
@@ -40,7 +40,7 @@ const register = asyncHandler(async (req, res) => {
       email: user.email,
       company: company,
       department: department,
-      role: role
+      role: role,
     },
   });
 });
@@ -64,7 +64,7 @@ const login = asyncHandler(async (req, res) => {
         email: user.email,
         name: user.name,
         id: user._id,
-        companyId : user.company
+        companyId: user.company,
       },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: '30m' },
@@ -134,7 +134,7 @@ const deleteAllUsers = asyncHandler(async (req, res) => {
   res.send('success');
 });
 
-const getCompanyUsers= asyncHandler(async(req,res)=>{
+const getCompanyUsers = asyncHandler(async (req, res) => {
   const companyId = req.params.id;
   if (!companyId) {
     throw new Error('id is must');
@@ -143,13 +143,13 @@ const getCompanyUsers= asyncHandler(async(req,res)=>{
   if (!company) {
     throw new Error('Company not found');
   }
-  const companyUsers= await User.find({company:companyId})
-  if(!companyUsers){
-    res.status(404)
-    throw new Error("no such company found")
+  const companyUsers = await User.find({ company: companyId });
+  if (!companyUsers) {
+    res.status(404);
+    throw new Error('no such company found');
   }
-  res.send(companyUsers)
-})
+  res.send(companyUsers);
+});
 
 module.exports = {
   getAllUsers,
@@ -159,5 +159,5 @@ module.exports = {
   updateUser,
   deleteUser,
   deleteAllUsers,
-  getCompanyUsers
+  getCompanyUsers,
 };
