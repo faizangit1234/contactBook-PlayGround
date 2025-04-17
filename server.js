@@ -5,6 +5,7 @@ const userRoutes = require('./src/routes/userRoutes.js');
 const contactRoutes = require('./src/routes/contactRoutes.js');
 const companyRoutes = require('./src/routes/companyRoutes.js');
 const departmentRoutes = require('./src/routes/departmentRoutes.js');
+const uploadRoutes = require('./src/routes/uploadRoutes.js');
 const errorHandler = require('./src/middlewares/errorHandler.js');
 const connectDb = require('./src/utils/connectDb.js');
 
@@ -23,6 +24,7 @@ app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/contacts', contactRoutes);
 app.use('/api/v1/companies', companyRoutes);
 app.use('/api/v1/departments', departmentRoutes);
+app.use('/api/v1/upload', uploadRoutes);
 
 app.get('/', (req, res) => {
   res.status(200).send('Welcome to Contact Book');

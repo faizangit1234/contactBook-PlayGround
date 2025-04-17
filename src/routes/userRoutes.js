@@ -12,6 +12,7 @@ const {
 } = require('../controllers/user.controller.js');
 const validateToken = require('../middlewares/validateTokenHandler.js');
 const checkrole = require('../middlewares/checkRole.js');
+const upload = require('../middlewares/uploadMiddleware.js');
 
 /**
  * @swagger
@@ -53,7 +54,13 @@ const checkrole = require('../middlewares/checkRole.js');
  *       400:
  *         description: Validation error
  */
-router.post('/', validateToken, checkrole('admin', 'superAdmin'), register);
+router.post(
+  '/',
+  validateToken,
+  checkrole('admin', 'superAdmin', 'manager'),
+  upload.single('avatar'),
+  register,
+);
 
 /**
  * @swagger
@@ -69,7 +76,7 @@ router.post('/', validateToken, checkrole('admin', 'superAdmin'), register);
  *       401:
  *         description: Unauthorized
  */
-router.route('/').get(validateToken, checkrole('admin', 'superAdmin', 'manager'), getAllUsers);
+router.route('/').get(getAllUsers);
 
 /**
  * @swagger
