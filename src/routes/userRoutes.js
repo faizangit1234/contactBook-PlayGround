@@ -56,8 +56,7 @@ const upload = require('../middlewares/uploadMiddleware.js');
  */
 router.post(
   '/',
-  validateToken,
-  checkrole('admin', 'superAdmin', 'manager'),
+  
   upload.single('avatar'),
   register,
 );

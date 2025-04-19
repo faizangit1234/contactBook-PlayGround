@@ -3,6 +3,7 @@ const User = require('../models/user.model.js');
 const Company = require('../models/company.model.js');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { transporter } = require('../config/nodemailer.js');
 
 //@desc get all users
 //@route /api/v1/users/
@@ -28,7 +29,6 @@ const register = asyncHandler(async (req, res) => {
     throw new Error('email already exists');
   }
   const hashedPass = await bcrypt.hash(password, 10);
-  console.log(req.body);
   const user = await User.create({
     name,
     email,
@@ -42,7 +42,21 @@ const register = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error('invalid fields');
   }
+  const html = `
+  <h1>Welcome, ${name}!</h1>
+  <p>Thanks for registering at Kashmir Luxury Escapes.</p>
+`;
 
+  try {
+    await transporter.sendMail({
+      from: process.env.MAIL_USER,
+      to: email,
+      subject: "Hello user, you are welcome",
+      html,
+    });
+  } catch (error) {
+    console.error("Email failed:", error.message);
+  }
   res.send({
     message: 'user created successfully',
     user: {
@@ -80,6 +94,21 @@ const login = asyncHandler(async (req, res) => {
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: '30m' },
     );
+    const html = `
+    <h1>Welcome, ${email}!</h1>
+    <p>Thanks for registering at Kashmir Luxury Escapes.</p>
+  `;
+  
+    try {
+      await transporter.mailer.sendMail({
+        from: process.env.MAIL_USER,
+        to: email,
+        subject: "Hello user, you are welcome",
+        html,
+      });
+    } catch (error) {
+      console.error("Email failed:", error.message);
+    }
     res.status(200).json({
       message: 'login successfully',
       accessToken: accessToken,
