@@ -11,7 +11,7 @@ const {
 const checkrole = require('../middlewares/checkRole.js');
 
 router.use(validateToken);
-router.use(checkrole('superAdmin', 'admin', 'manager'));
+// router.use(checkrole('superAdmin', 'admin', 'manager'));
 
 /**
  * @swagger

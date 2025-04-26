@@ -18,7 +18,7 @@ const getAllUsers = asyncHandler(async (req, res) => {
 //@public
 const register = asyncHandler(async (req, res) => {
   const { name, email, password, company, department, role } = req.body;
-  const avatarUrl = req.file.path;
+  const avatarUrl = req.file?.path;
   console.log(avatarUrl);
   if (!name || !email || !password || !company) {
     res.status(400);

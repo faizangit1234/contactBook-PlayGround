@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require("cors")
 const dotenv = require('dotenv').config();
 const { swaggerUi, swaggerSpec } = require('./swagger');
 const userRoutes = require('./src/routes/userRoutes.js');
@@ -12,6 +13,12 @@ const connectDb = require('./src/utils/connectDb.js');
 const app = express();
 const port = process.env.PORT || 5000;
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+//allow cors
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials : true}
+))
 
 // Connect to database
 connectDb();
